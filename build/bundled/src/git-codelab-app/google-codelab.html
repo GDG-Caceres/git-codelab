@@ -1,0 +1,127 @@
+<html><head><link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-localstorage/iron-localstorage.html">
+<link rel="import" href="../neon-animation/neon-animated-pages.html">
+<link rel="import" href="../neon-animation/animations/slide-from-right-animation.html">
+<link rel="import" href="../neon-animation/animations/slide-from-left-animation.html">
+<link rel="import" href="../neon-animation/animations/slide-right-animation.html">
+<link rel="import" href="../neon-animation/animations/slide-left-animation.html">
+
+<link rel="import" href="../app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
+<link rel="import" href="../paper-fab/paper-fab.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-menu/paper-menu.html">
+<link rel="import" href="../paper-item/paper-item.html">
+
+<link rel="import" href="layout-style.html">
+<link rel="import" href="codelab-style.html">
+<link rel="import" href="analytics-behavior.html">
+
+
+</head><body><dom-module id="google-codelab">
+  <template strip-whitespace="">
+    <style include="layout-style"></style>
+    <style include="codelab-style"></style>
+
+    <iron-localstorage name="{{title}}" value="{{state}}" hidden="" on-iron-localstorage-load-empty="_stateInit" on-iron-localstorage-load="_stateLoaded">
+    </iron-localstorage>
+
+    <app-drawer-layout fullbleed="" narrow="{{_narrow}}">
+      <app-drawer id="drawer" swipe-open="">
+
+        <div class="drawer-content-wrapper layout vertical" style="height:100%">
+
+          <div class="flex" style="overflow: auto">
+            <div title="Time remaining" hidden$="{{!_isPositiveNum(duration)}}" class="countdown layout horizontal">
+              <iron-icon icon="schedule"></iron-icon> <span>[[remaining]]</span>
+            </div>
+
+            <paper-menu id="toc" class="flex" selected="{{selected}}" on-iron-select="_allowCodelabComplete">
+              <template is="dom-repeat" items="{{steps}}" strip-whitespace="">
+                <paper-item class$="{{_tocItemClass(selected, index)}}">
+                  <i>{{item.step}}</i><span>{{item.label}}</span>
+                </paper-item>
+              </template>
+            </paper-menu>
+          </div>
+
+          <div id="metadata">
+            <template is="dom-if" if="{{lastUpdated}}" strip-whitespace="">
+              <div id="last-updated">Last updated on {{lastUpdated}}.</div>
+            </template>
+            <div id="feedback" hidden$="[[!feedbackLink]]">
+              Did you find a mistake?
+              <a target="_blank" href$="{{feedbackLink}}">Please file a bug</a>.
+            </div>
+          </div>
+
+        </div>
+
+      </app-drawer>
+
+      <app-header-layout fullbleed="">
+
+        <div id="headerpanel" fixed="" narrow$="[[_narrow]]">
+          <div id="main-toolbar" hidden$="[[noToolbar]]">
+            <div>
+              <template is="dom-if" if="{{_narrow}}" strip-whitespace="">
+                <paper-icon-button icon="menu" drawer-toggle=""></paper-icon-button>
+              </template>
+              <template is="dom-if" if="{{!_narrow}}" strip-whitespace="">
+                <paper-icon-button icon="arrow-back" on-tap="_goToHome"></paper-icon-button>
+              </template>
+            </div>
+            <h3 class="title">[[title]]</h3>
+            <div title="Time remaining" hidden$="{{!_isPositiveNum(duration)}}" class="countdown layout horizontal">
+              <iron-icon icon="schedule"></iron-icon> <span>{{remaining}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="main-content">
+
+          <neon-animated-pages id="pages" selected="{{selected}}" on-iron-deselect="_onStepLeave" on-iron-items-changed="_onStepsChanged">
+            <content select="google-codelab-step"></content>
+          </neon-animated-pages>
+
+          <footer id="controls" hidden$="[[noArrows]]" narrow$="[[_narrow]]">
+            <div class="fabs layout horizontal justified">
+              <paper-fab raised="" class="navbutton prevbutton" icon="chevron-left" on-tap="selectPrevious" title="Previous step" disabled$="{{_isFirstStep(selected)}}">
+              </paper-fab>
+
+              <div>
+                <template is="dom-if" if="{{_showNextFab(selected, steps)}}" strip-whitespace="">
+                  <paper-fab icon="chevron-right" raised="" class="navbutton nextbutton" title="{{_nextFabTitle(selected)}}" on-tap="selectNext">
+                  </paper-fab>
+                </template>
+
+                <template is="dom-if" if="{{_showDoneFab(selected, steps)}}" strip-whitespace="">
+                  <paper-fab icon="done" raised="" class="navbutton donebutton" on-tap="_goToHome" title="Complete codelab">
+                  </paper-fab>
+                </template>
+              </div>
+            </div>
+          </footer>
+        </div>
+
+      </app-header-layout>
+    </app-drawer-layout>
+
+    <paper-dialog id="resumeDialog" modal="">
+      <h2>Would you like to resume where you left off?</h2>
+      <p>Step <span>{{_storedStep.step}}</span>: <span>{{_storedStep.label}}</span></p>
+      <div class="buttons">
+        <paper-button dialog-dismiss="" on-click="_stateInit">Cancel</paper-button>
+        <paper-button dialog-confirm="" on-click="_resume" autofocus="">Resume</paper-button>
+      </div>
+    </paper-dialog>
+
+  </template>
+  <script>Polymer({is:"google-codelab",behaviors:[Polymer.IronA11yKeysBehavior,GoogleCodelabs.AnalyticsBehavior],properties:{title:{type:String,value:""},category:{type:String,value:null},environment:{type:String,value:null},feedbackLink:{type:String,value:""},selected:{type:Number,value:0},duration:{type:Number,value:0,readOnly:!0},remaining:{type:String,value:"",readOnly:!0},lastUpdated:{type:String,value:""},steps:{type:Array,value:function(){return[]},readOnly:!0},state:{type:Object,value:null},noToolbar:{type:Boolean,value:!1},noArrows:{type:Boolean,value:!1},noHighlight:{type:Boolean,value:!1,reflectToAttribute:!0},_storedStep:{type:Object,value:null},_resumed:{type:Boolean,value:!1},_userHasNavigated:{type:Boolean,value:!1,readOnly:!0}},observers:["_selectedChanged(steps, selected)"],keyBindings:{left:"selectPrevious",right:"selectNext"},ready:function(){this.keyEventTarget=document.body,this._updateStepIndexFromUrl()},_onStepsChanged:function(){var e=0,t=this.$.pages.items.map(function(t,s){return e+=t.duration,t.step=s+1,t}.bind(this));this._setSteps(t),this._setDuration(e),this._updateRemaining(),this.fire("google-codelab-ready",{steps:this.steps})},selectNext:function(){this.$.pages.entryAnimation="slide-from-right-animation",this.$.pages.exitAnimation="slide-left-animation",this.select(this.selected+1)},selectPrevious:function(){this.$.pages.entryAnimation="slide-from-left-animation",this.$.pages.exitAnimation="slide-right-animation",this.select(this.selected-1)},select:function(e){e<0||e>this.steps.length-1||(this._allowCodelabComplete(),this.selected=e)},_selectedChanged:function(e,t){if(this.set("state.stepIndex",this.selected),this._updateRemaining(),this.steps.length){var s=this.steps[this.selected];s.active=!0,location.hash=this.selected.toString(),this.fire("google-codelab-step",{index:this.selected,step:s}),this.selected===this.steps.length-1&&!this._resumed&&this._userHasNavigated&&this.fire("google-codelab-complete")}},_onStepLeave:function(e,t){var s=t.item;s.active=!1,this._scrollToTopOfStep()},_stateInit:function(){this.state={stepIndex:this.selected}},_stateLoaded:function(){this.async(function(){this._storedStep=this.steps[this.state.stepIndex],0===this.selected&&this.state.stepIndex>0&&this.$.resumeDialog.open()},500)},_updateStepIndexFromUrl:function(){var e=parseInt(location.hash.slice(1),10);(isNaN(e)||e<0)&&(e=0),this.steps&&this.steps.length&&e>this.steps.length-1&&(e=this.steps.length-1),this.selected=e},_allowCodelabComplete:function(){this._set_userHasNavigated(!0)},_updateRemaining:function(){if(this.steps){var e=0;this.steps.slice(this.selected).forEach(function(t){e+=t.duration||0});var t=this._narrow?"":" remaining";this._setRemaining(e+" min"+t)}},_resume:function(){this._resumed=!0,this.select(this.state.stepIndex),this._resumed=!1},_goToHome:function(){for(var e,t=location.search.substring(1).split("&"),s=0;s<t.length;s++){var i=t[s].split("=");if("index"===i[0]){e=i[1];break}}e=e?decodeURIComponent(e):"",e=e.replace(/[^a-z0-9\-]+/gi,""),"index"===e&&(e=""),window.location.href="/"+e},_tocItemClass:function(e,t){var s=["toc-item"];return t<e&&s.push("completed"),s.join(" ")},_scrollToTopOfStep:function(){document.body.scrollTop=0},_isPositiveNum:function(e){return e>0},_isFirstStep:function(e){return isNaN(e)||0==e},_isLastStep:function(e){return!!this.steps.length&&e>=this.steps.length-1},_showDoneFab:function(e,t){return this._isLastStep(e)},_showNextFab:function(e,t){return!this._isLastStep(e)},_nextFabTitle:function(e){return e>0?"Next step":"Start codelab"}});</script>
+</dom-module>
+</body></html>

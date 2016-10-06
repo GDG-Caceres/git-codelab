@@ -1,0 +1,7 @@
+{
+  "name": "Git codelab",
+  "short_name": "git codelab",
+  "description": "Starter with Git codelab",
+  "start_url": "/",
+  "display": "standalone"
+}

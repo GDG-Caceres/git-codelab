@@ -1,0 +1,24 @@
+<html><head><link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="shared-style.html">
+<link rel="import" href="step-style.html">
+
+<link rel="import" href="syntax-style.html">
+<script src="../google-prettify/src/prettify.js"></script>
+
+
+</head><body><dom-module id="google-codelab-step">
+  <template strip-whitespace="">
+    <style include="shared-style"></style>
+    <style include="step-style"></style>
+    <style include="syntax-style"></style>
+
+    <div class="instructions">
+      <div class="inner">
+        <h2 id="title"><span>{{step}}</span>. <span>{{label}}</span></h2>
+        <content></content>
+      </div>
+    </div>
+  </template>
+  <script>!function(){function e(e){return e.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}Polymer({is:"google-codelab-step",properties:{step:{type:Number,value:1,notify:!0},label:{type:String,value:""},duration:{type:Number,value:0,notify:!0},active:{type:Boolean,value:!1,observer:"_activeChanged"}},_isHighlighted:!1,_activeChanged:function(){var t=Polymer.dom(this).parentNode;"google-codelab"===t.localName&&t.noHighlight||this.active&&!this._isHighlighted&&this.async(function(){var t=Polymer.dom(this).querySelectorAll("pre > code");t.forEach(function(t){Polymer.dom(t).innerHTML=prettyPrintOne(e(t.textContent)),t.addEventListener("copy",function(){this.fire("google-codelab-snippet-copy",{snippet:t.textContent})}.bind(this))}.bind(this)),this._isHighlighted=!0})}})}();</script>
+</dom-module>
+</body></html>
