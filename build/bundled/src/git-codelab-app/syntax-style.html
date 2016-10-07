@@ -1,0 +1,52 @@
+<html><head><link rel="import" href="font-source-code-pro.html">
+
+</head><body><dom-module id="syntax-style">
+  <template>
+    <style>
+      ::content pre, ::content code {
+        font-family: 'Source Code Pro', Helvetica, Arial;
+        font-size: inherit;
+        border-radius: 3px;
+        overflow-x: auto;
+        @apply(--google-codelab-step-code);
+      }
+
+      ::content code {
+        color: #333;
+        background-color: rgba(0, 0, 0, 0.08);
+        padding: 0.1em 0.3em;
+      }
+
+      ::content pre {
+        display: block;
+        color: white;
+        background-color: #28323f;
+        padding: 14px;
+        -webkit-text-size-adjust: none;
+        line-height: 1.4;
+      }
+
+      ::content pre > code {
+        padding: 0;
+        background-color: transparent;
+      }
+
+      ::content code em {
+        color: #97C8F2;
+      }
+
+      ::content pre .str, ::content code .str { color: #65B042; } /* string  - green */
+      ::content pre .kwd, ::content code .kwd { color: #E28964; } /* keyword - dark pink */
+      ::content pre .com, ::content code .com { color: #AEAEAE; font-style: italic; } /* comment - gray */
+      ::content pre .typ, ::content code .typ { color: #89bdff; } /* type - light blue */
+      ::content pre .lit, ::content code .lit { color: #3387CC; } /* literal - blue */
+      ::content pre .pun, ::content code .pun { color: #fff; } /* punctuation - white */
+      ::content pre .pln, ::content code .pln { color: #fff; } /* plaintext - white */
+      ::content pre .tag, ::content code .tag { color: #89bdff; } /* html/xml tag    - light blue */
+      ::content pre .atn, ::content code .atn { color: #bdb76b; } /* html/xml attribute name  - khaki */
+      ::content pre .atv, ::content code .atv { color: #65B042; } /* html/xml attribute value - green */
+      ::content pre .dec, ::content code .dec { color: #3387CC; } /* decimal - blue */
+    </style>
+  </template>
+</dom-module>
+</body></html>

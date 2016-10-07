@@ -1,7 +1,8 @@
 <!doctype html>
 
 <html>
-  <head>
+
+<head>
     <title>GDG Git codelab</title>
 
     <meta charset="utf-8">
@@ -9,20 +10,57 @@
 
     <link rel="manifest" href="/manifest.json">
 
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,500italic,700,700italic|Roboto+Mono:400,700">
+
     <script src="/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="/bower_components/iron-icons/iron-icons.html">
+    <link rel="import" href="/bower_components/paper-button/paper-button.html">
     <link rel="import" href="/src/git-codelab-app/git-codelab-app.html">
-  </head>
+    <link rel="import" href="/src/git-codelab-app/google-codelab-elements.html">
 
-  <body>
-    <google-codelab title="Empezando con Git" feedback-link="#"
-                    last-updated="2016-10-06">
+    <style is="custom-style">
+        body {
+            font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial;
+            background: var(--google-codelab-background, --paper-grey-300);
+        }
+    </style>
+</head>
 
-      <google-codelab-step label="Requisitos" step="1" duration="10">
-        <p>Here's a codelab step</p>.
-        <pre><code>this snippet will be auto-highlighted</code></pre>
-        <p>And this is an <code>inline code</code>.
-      </google-codelab-step>
+<body>
+    <google-codelab title="Empezando con Git" feedback-link="#" last-updated="2016-10-06" environment="web">
+
+        <google-codelab-step label="Pre-requisitos" step="1" duration="5">
+          <h3 class="checklist">Que vas aprender</h3>
+          <ul class="checklist">
+            <li>Como crear y gestionar un repositorio usando Git.</li>
+            <li>Como compartir proyectos en plataformas como Github o Bitbucket.</li>
+          </ul>
+          <h3>Que vas a necesitar</h3>
+          <ul>
+            <li>Instalar <a href="https://git-scm.com">Git</a> en tu sistema operativo.</li>
+          </ul>
+
+          <google-codelab-survey survey-id="initial-survey">
+            <h4>¿Que experiencia tienes con control de versiones?</h4>
+            <paper-radio-group>
+              <paper-radio-button>Ninguna/Novato</paper-radio-button>
+              <paper-radio-button>Intermedio</paper-radio-button>
+              <paper-radio-button>Dios</paper-radio-button>
+            </paper-radio-group>
+          </google-codelab-survey>
+
+          <h4><b>Nota:</b> Los comandos usados en el codelab han sido probados sobre Linux y OS X.</h4>
+
+        </google-codelab-step>
+
+        <google-codelab-step label="Preparando el entorno" step="2" duration="10">
+            <p>Durante el codelab trabajaremos sobre un proyecto vacio en el que iremos haciendo modificaciones según avancemos.</p>
+            <pre><code>mkdir test-project && cd $_</code></pre>
+            <p>Y ahora vamos a inicializar git dentro de nuestra carpeta</p>
+            <pre><code>git init</code></pre>
+        </google-codelab-step>
 
     </google-codelab>
-  </body>
+</body>
+
 </html>

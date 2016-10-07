@@ -1,0 +1,41 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-localstorage/iron-localstorage.html">
+<link rel="import" href="../../bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../../bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="shared-style.html">
+
+
+</head><body><dom-module id="google-codelab-survey">
+  <template strip-whitespace="">
+    <style include="shared-style">
+      :host {
+        display: block;
+        margin: 2em 0;
+        padding: 0;
+        background: var(--google-codelab-survey-background, #edf4ff);
+        border-left: var(--google-codelab-survey-border, 4px solid #94BAF9);
+      }
+
+      .survey > ::content h4 {
+        font-weight: 500;
+        font-size: 16px;
+        padding: 0.8em 0.6em 0 20px;
+        margin: 0;
+      }
+
+      .survey > ::content paper-radio-group {
+        padding: 0.4em 0 1.1em 30px;
+      }
+
+      .survey > ::content paper-radio-button {
+        display: block;
+        padding: 4px 0;
+      }
+    </style>
+    <iron-localstorage name="{{_storageKey(surveyId)}}" value="{{answers}}" on-iron-localstorage-load-empty="_initAnswers" on-iron-localstorage-load="_storageLoaded">
+    </iron-localstorage>
+    <div class="survey"><content></content></div>
+  </template>
+  <script>Polymer({is:"google-codelab-survey",properties:{surveyId:{type:String,value:""},answers:{type:Object,notify:!0}},listeners:{click:"_onClick"},ready:function(){for(var e,t=Polymer.dom(this).queryDistributedElements("paper-radio-group"),r=0;e=t[r];r++)this._selectAnswer(e)},_initAnswers:function(){this.answers={}},_storageKey:function(e){return"codelab-survey-"+e},_storageLoaded:function(){for(var e,t=this.getContentChildren(),r="",n=0;e=t[n];n++)"H4"!==e.tagName?r&&e.select&&this._selectAnswer(e,r):r=this.answers[this._elemText(e)]},_selectAnswer:function(e,t){for(var r,n=0;r=e.children[n];n++)r.name||(r.name=this._elemText(r)),r.name===t&&e.select(t)},_onClick:function(e){if(e=Polymer.dom(e),"PAPER-RADIO-BUTTON"===e.localTarget.tagName){var t=e.localTarget.parentElement.previousElementSibling;if(t&&"H4"===t.tagName){var r=this._elemText(t),n=e.localTarget.name;this.set("answers."+r,n),this.fire("google-codelab-survey-answer",{question:r,answer:n})}}},_elemText:function(e){return e.textContent.trim().replace(/\n|\r/g,"")}});</script>
+</dom-module>
+</body></html>
