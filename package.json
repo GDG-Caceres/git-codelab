@@ -1,0 +1,17 @@
+{
+  "name": "git-codelab",
+  "version": "1.0.0",
+  "description": "Git codelab GDG Caceres",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oscarcpozas/git-codelab.git"
+  },
+  "author": "Oscar Caballero",
+  "bugs": {
+    "url": "https://github.com/oscarcpozas/git-codelab/issues"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-gh-pages": "^0.5.4"
+  }
+}
