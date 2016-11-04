@@ -1,18 +1,20 @@
 # \<git codelab\>
 
-Starter with Git codelab
+This is a project by GDG Cáceres to learn use git for managing project in real life.
 
-## Install the Polymer-CLI
+## How work?
+
+### Install the Polymer-CLI
 
 First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
 
-## Viewing Your Application
+### Viewing Your Application In Local
 
 ```
 $ polymer serve
 ```
 
-## Building Your Application
+### Building Your Application
 
 ```
 $ polymer build
@@ -35,4 +37,12 @@ $ polymer serve build/bundled
 $ polymer test
 ```
 
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
+### How deploy in official web?
+
+Project uses Firebase hosting, and it's necessary Firebase-cli for this task.
+
+```
+$ firebase deploy
+```
+
+This task only work after login in Firebase-cli.
