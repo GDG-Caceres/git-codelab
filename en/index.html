@@ -15,6 +15,7 @@
 
     <script src="/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 
+    <link rel="import" href="/bower_components/iron-grid/iron-grid.html">
     <link rel="import" href="/bower_components/polymer/polymer.html">
     <link rel="import" href="/bower_components/iron-icons/iron-icons.html">
     <link rel="import" href="/bower_components/paper-button/paper-button.html">
@@ -36,7 +37,7 @@
           First step
         -->
         <google-codelab-step label="Pre-requisitos" step="1" duration="0">
-          <h4>Este codelab esta tambien disponible en <a href="/en/">Ingles</a>.</h4>
+          <h4>This codelab is available in <a href="/">Spanish</a> too.</h4>
 
           <h3 class="checklist">Que vas aprender</h3>
           <ul class="checklist">
@@ -65,32 +66,21 @@
           Second step
         -->
         <google-codelab-step label="¿Que es Git?" step="2" duration="5">
-            <img src="./images/git.svg" alt="Git" height="200"/>
-            <p>Git es actualmente el software de control de versiones mas moderno. Diseñado
-              por Linus Torvalds en 2005 y mantenido actualmente por la comunidad Open Source,
-              pensando en la eficiencia y la confiabilidad del mantenimiento de versiones de aplicaciones.
-              Ahora mismo se pueden encontrar una gran cantidad de proyectos basados
-              en Git tanto de caracter comercial como proyectos de codigo abierto.
-            </p>
-            <h3 class="checklist">¿Que es el control de versiones?</h3>
-            <p>El control de versiones esta pensado para ayudar a un equipo a mantener su
-              software a lo largo del tiempo. Con el control de versiones podemos llevar
-              un historial de todas los cambios que el equipo realiza sobre el proyecto, y
-              asi en el futuro poder recuperar versiones anteriores o realizar comparaciones.
-            </p>
-            <p>
-              Una forma de bastante chapucera de llevar un control de versiones, seria crear
-              una copia de nuestra carpeta del proyecto llegados a cierto punto (Ya que somos
-              bastante avispados guardamos esta copia con la fecha del dia y la hora). En un futuro
-              tendre varias copias con diferentes versiones del proyectos y si llegamos a un error
-              en el codigo podremos comparar con las versiones anteriores.
-            </p>
-            <p>
-              Como es de esperar este sistema tiene bastante incovenientes, como podria ser
-              el equivocarse al sobreescribir algun archivo que corresponda alguna version anterior
-              y dejemos inservible es copia. Las herramientas de control de versiones nos aportan
-              estas funcionalidades y ademas seguridad a la hora de realizar esta tarea.
-            </p>
+            <iron-grid>
+              <div class="s5">
+                <img src="./images/git.svg" alt="Git" align="left"/>
+              </div>
+              <div class="s7">
+              <p>Git es actualmente el software de control de versiones mas moderno. Diseñado
+                por Linus Torvalds en 2005 y mantenido actualmente por la comunidad Open Source,
+                pensando en la eficiencia y la confiabilidad del mantenimiento de versiones de aplicaciones.
+                Ahora mismo se pueden encontrar una gran cantidad de proyectos basados
+                en Git tanto de caracter comercial como proyectos de codigo abierto.
+              </p>
+              </div>
+            </iron-grid>
+            <p></p>
+
         </google-codelab-step>
 
         <!--
@@ -126,10 +116,10 @@ Initialized empty Git repository in /Users/your-user/test-git-project/.git/</pre
             <br />
             <h3>Repositorio central (Bare repository)</h3>
             <p><b>ATENCIÓN:</b> Esta parte a modo informativo, no se necesita en el codelab.</b></p>
-            <p>El repositorio que hara de host de todos tus commits y servira para distribuirlo
-              entre los colaboradores es el conocido como repositorio central al que se conectaran
-              todos los demas para subir los cambios, en otras palabras es el que contiene el proyecto original.</p>
-            <p>Este servidor central lo puedes crear en un servidor privado usando:</p>
+            <p>El repositorio que hara de host de todos nuestros commits y servira para distribuir
+              nuestro proyecto es el conocido como repositorio central al que se conectaran todos los demas
+              para subir los cambios, en otras palabras es el que contiene el proyecto original.</p>
+            <p>Este servidor central lo podemos crear en un servidor privado usando:</p>
             <pre><code>$ git init --bare nombre-de-nuestro-repositorio.git</code></pre>
             <p>Por convenio los repositorios centrales creados con <b>--bare</b> suelen terminar en .git</p>
             <p>Una vez creado podras acceder a el en el futuro via ssh o http.</p>
@@ -151,11 +141,9 @@ Initialized empty Git repository in /Users/your-user/test-git-project/.git/</pre
               mas proyectos activos de codigo abierto, y lo consideramos referencia para aprender y colaborar.</p>
 
             <h3>Creando repositorio en Github</h3>
-            <p>Tras registrate en Github puedes crear de forma gratuita repositorios
-              publicos (y podran ser consultados por cualquier persona
-              incluso no registrada en Github). Para crear el repositorio
-              debes dirijirte a la esquina superior derecha en la web de Github y
-              pulsar en <b>'New repository'</b>.</p>
+            <p>Tras registrarnos en Github podremos crear de forma gratuita repositorios publicos (seran publicos, y
+              podran ser consultados por cualquier persona incluso no registrada en Github). Para crear nuestro repositorio
+              nos dirijimos a la esquina superior derecha en la web de Github y pulsamos en <b>'New repository'</b>.</p>
             <img src="/images/create-repository.png"/>
             <br />
 
@@ -166,16 +154,16 @@ Initialized empty Git repository in /Users/your-user/test-git-project/.git/</pre
             <p>Por convenio se utiliza el nombre 'origin' para la ruta que apunta hacia el repositorio original
               del proyecto en caso de haber varios forks:</p>
             <pre><code>$ git remote add origin https://github.com/username/test-git-project.git</code></pre>
-            <p><b>NOTA:</b> Se puede usar el comando git remote -v para ver las rutas añadidas al proyecto.</p>
+            <p><b>NOTA:</b> se puede usar el comando git remote -v para ver las rutas añadidas al proyecto.</p>
         </google-codelab-step>
 
         <!--
           VI step
         -->
-        <google-codelab-step label="Añadiendo archivos" step="6" duration="5">
-            <p>Es el momento de crear el primer archivo del proyecto proyecto:</p>
+        <google-codelab-step label="Añadiendo archivos" step="8" duration="5">
+            <p>Es el momento de crear el primer archivo de nuestro proyecto:</p>
             <pre><code>$ touch index.html</code></pre>
-            <p>Puedes comprobar que Git ha detectado el nuevo archivo añadido, pero que este aún no se
+            <p>Podemos comprobar que Git ha detectado el nuevo archivo añadido, pero que este aún no se
               ha añadido al tracking:</p>
             <pre><code>$ git status</code>
 On branch master
@@ -186,13 +174,13 @@ Untracked files:
 
       index.html</pre>
 
-            <p>Añade al tracking del repositorio Git el archivo que has creado previamente:</p>
+            <p>Vamos añadirlo al tracking de nuestro repositorio de Git:</p>
             <pre><code>$ git add index.html</code></pre>
             <p>A partir de ahora el archivo queda añadido al staging de Git y todos los cambios que se produzcan
-              en el seran guardados en el proximo commit que realices.</p>
+              en el seran guardados en el proximo commit.</p>
             <pre><code>$ git status</code></pre>
             <br />
-            <h3>¿Que es la Staging Area?</h3>
+            <h3>Staging area</h3>
             <p>Al usar 'git add' lo que esta pasando es que los archivos del proyecto pasan a un buffer intermedio
               entre el area de trabajo y la historia del proyecto.</p>
         </google-codelab-step>
@@ -200,8 +188,8 @@ Untracked files:
         <!--
           VIII step
         -->
-        <google-codelab-step label="First commit!" step="7" duration="5">
-            <p>Como ya has visto tienes el archivo <b>index.html</b> añadido al tracking de Git
+        <google-codelab-step label="First commit!" step="9" duration="5">
+            <p>Como ya has visto tienes el archivo 'index.html' añadido al tracking de Git
             pero todavia este no se ha guardado en la historia del proyecto, para ello crearemos un commit:</p>
             <pre><code>$ git commit -m 'First commit'</code>
 [master (root-commit) 6564692] First commit
@@ -214,22 +202,19 @@ Untracked files:
               la ruta que añadimos antes mediante <b>$ git remote add</b>:</p>
             <pre><code>$ git push name-of-route master</code></pre>
             <p>Se pedira el login de Github para poder acceder al repositorio y subir los cambios a la rama <b>master</b>.</p>
-            <p><b>RECUERDA:</b> Donde pone 'name-of-route' durante el ejemplo se uso el nombre 'origin'
-              para la ruta principal.</p>
+            <p><b>RECUERDA:</b> donde pone 'name-of-route' durante el ejemplo hemos usado el nombre 'origin'.</p>
         </google-codelab-step>
 
         <!--
           IX step
         -->
-        <google-codelab-step label="Ramas" step="8" duration="5">
-          <p>En el paso anterior se menciona por primera vez la rama <b>master</b>
-            que es la que se crea por defecto y se usa como rama root del proyecto.
-            Las ramas es una función bastante potente de git y muy util especialmente
+        <google-codelab-step label="Ramas" step="10" duration="5">
+          <p>En el paso anterior se menciona por primera vez la rama <b>master</b> que es la que se crea por defecto
+            y se usa como rama root del proyecto. Las ramas es una función bastante potente de git y muy util especialmente
             cuando esta colaborando con mas gente:</p>
           <pre><code>$ git branch</code></pre>
-          <p>Se monstrara la lista de ramas que tenemos en nuestro repositorio.
-            Ahora mismo solo esta creada, la rama 'master' pero vas a crear otra
-            como copia del ultimo commit de la rama master:</p>
+          <p>Se monstrara la lista de ramas que tenemos en nuestro repositorio. Ahora mismo solo esta creada, la rama 'master'
+            pero vas a crear otra como copia del ultimo commit de la rama master:</p>
           <pre><code>$ git branch develop</code></pre>
           <p>Si volvemos a usar el comando para listar las ramas veras que te encuentras
             en la rama 'master' pero se ha creado una nueva rama bajo el nombre 'develop'.</p>
@@ -254,7 +239,7 @@ Untracked files:
         <!--
           X
         -->
-        <google-codelab-step label="Juntando ramas" step="9" duration="0">
+        <google-codelab-step label="Juntando ramas" step="11" duration="0">
           <p>Llegara el momento en el que los avances realizados en algunas ramas
           deban unirse a nuestra rama principal (master) u otra rama por necesidad.
           Para ello exite el comando merge, que nos permite unir la rama seleccionada
@@ -266,7 +251,7 @@ Untracked files:
         <!--
           XI
         -->
-        <google-codelab-step label="gitignore" step="10" duration="0">
+        <google-codelab-step label="gitignore" step="12" duration="0">
           <p>En ocasiones nos encontraremos con archivos que no queremos que Git añada al seguimiento del
             proyecto, esto lo podemos conseguir mediante el archivo .gitignore:</p>
           <pre><code>$ touch .gitignore</code></pre>
@@ -279,7 +264,7 @@ Untracked files:
         <!--
           XII
         -->
-        <google-codelab-step label="Recursos extras" step="11" duration="0">
+        <google-codelab-step label="Recursos extras" step="13" duration="0">
           <h3><a href="https://www.atlassian.com/git/tutorials">Atlassian tutorial - Become a git guru</a></h3>
           <p>Learn Git to keep track of your space station locations.</p>
           <h3><a href="https://www.atlassian.com/git/tutorials">Slides for this Codelab</a> by Oscar Caballero</h3>
